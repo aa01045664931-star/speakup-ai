@@ -1,40 +1,70 @@
 function showPage(pageId) {
   const pages = document.querySelectorAll(".page");
 
-  pages.forEach(page => {
+  pages.forEach((page) => {
     page.classList.remove("active");
   });
 
   document.getElementById(pageId).classList.add("active");
 }
 
-function startPractice() {
-  const text = document.getElementById("speechText").value;
+let stream = null;
+let timerInterval = null;
+let seconds = 0;
 
-  if (text.trim() === "") {
-    alert("발표문을 먼저 입력해 주세요!");
-    return;
+async function startPractice() {
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    });
+
+    const video = document.getElementById("camera");
+    video.srcObject = stream;
+
+    seconds = 0;
+
+    timerInterval = setInterval(() => {
+      seconds++;
+
+      const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const sec = String(seconds % 60).padStart(2, "0");
+
+      document.getElementById("timer").textContent =
+        `${min}:${sec}`;
+    }, 1000);
+
+    document.getElementById("liveHabit").textContent =
+      "발표 분석 중...";
+
+  } catch (error) {
+    alert("카메라 또는 마이크 권한을 허용해주세요!");
+  }
+}
+
+function stopPractice() {
+
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
   }
 
-  const habitCount =
-    (text.match(/음/g) || []).length +
-    (text.match(/어/g) || []).length +
-    (text.match(/그/g) || []).length;
+  clearInterval(timerInterval);
 
   document.getElementById("habitResult").textContent =
-    `말버릇 표현이 약 ${habitCount}회 감지되었습니다.`;
+    "음..., 어... 등의 말버릇 분석 예정";
 
   document.getElementById("speedResult").textContent =
-    "문장 길이를 기준으로 보았을 때 발표 속도는 보통으로 예상됩니다.";
+    "발표 속도 분석 예정";
+
+  document.getElementById("eyeResult").textContent =
+    "시선 처리 분석 예정";
 
   document.getElementById("postureResult").textContent =
-    "자세 분석은 웹캠 기능과 연동하여 추가할 예정입니다.";
+    "자세 안정성 분석 예정";
 
-  document.getElementById("aiFeedback").innerHTML = `
-    발표문의 주제는 비교적 잘 드러납니다.<br>
-    다만 도입부에 질문이나 사례를 추가하면 청중의 관심을 더 끌 수 있습니다.<br>
-    결론 부분에서는 발표 내용을 한 문장으로 정리하면 전달력이 높아집니다.
-  `;
+  document.getElementById("aiFeedback").textContent =
+    "발표가 종료되었습니다. 추후 ChatGPT API와 MediaPipe를 연결하여 실제 분석 결과를 제공할 예정입니다.";
 
-  showPage("analysis");
+  document.getElementById("liveHabit").textContent =
+    "분석 완료";
 }

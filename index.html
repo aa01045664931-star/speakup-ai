@@ -1,88 +1,135 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpeakUp AI</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <h2>SpeakUp AI</h2>
-      <button onclick="showPage('home')">홈</button>
-      <button onclick="showPage('practice')">발표 연습</button>
-      <button onclick="showPage('analysis')">AI 분석</button>
-      <button onclick="showPage('growth')">성장 기록</button>
-    </aside>
 
-    <main class="content">
-      <section id="home" class="page active">
-        <h1>AI 발표 코치 웹앱</h1>
-        <p>말하기 습관과 발표 자세를 분석해 발표 실력을 키워주는 웹앱입니다.</p>
-        <img src="assets/coach-character.png" class="character" />
-        <button class="main-btn" onclick="showPage('practice')">연습 시작하기</button>
-      </section>
+<div class="app">
 
-      <section id="practice" class="page">
-        <h1>발표 연습</h1>
-        <textarea id="speechText" placeholder="발표문을 입력하세요."></textarea>
-        <div class="btn-group">
-          <button onclick="startPractice()">분석 시작</button>
-          <button onclick="showPage('analysis')">결과 보기</button>
+  <aside class="sidebar">
+    <h2>SpeakUp AI</h2>
+
+    <button onclick="showPage('home')">🏠 홈</button>
+    <button onclick="showPage('practice')">🎤 발표 연습</button>
+    <button onclick="showPage('analysis')">🤖 AI 분석</button>
+    <button onclick="showPage('growth')">📈 성장 기록</button>
+  </aside>
+
+  <main class="content">
+
+    <!-- 홈 -->
+    <section id="home" class="page active">
+      <h1>AI 발표 코치 웹앱</h1>
+
+      <p>
+        말하기 습관과 발표 자세를 분석하여<br>
+        발표 자신감을 키워주는 AI 발표 코치입니다.
+      </p>
+
+      <img src="assets/bear-character.jpg" class="character">
+
+      <button class="main-btn" onclick="showPage('practice')">
+        발표 연습 시작
+      </button>
+    </section>
+
+    <!-- 발표 연습 -->
+    <section id="practice" class="page">
+
+      <h1>발표 연습</h1>
+
+      <div class="camera-box">
+        <video id="camera" autoplay playsinline muted></video>
+      </div>
+
+      <div class="practice-buttons">
+        <button onclick="startPractice()">
+          발표 시작
+        </button>
+
+        <button onclick="stopPractice()">
+          발표 종료
+        </button>
+      </div>
+
+      <div id="status">
+        발표 준비 중...
+      </div>
+
+    </section>
+
+    <!-- AI 분석 -->
+    <section id="analysis" class="page">
+
+      <h1>AI 분석 결과</h1>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>말버릇</h3>
+          <p id="habitResult">분석 전</p>
         </div>
-      </section>
 
-      <section id="analysis" class="page">
-        <h1>AI 분석 결과</h1>
-        <div class="cards">
-          <div class="card">
-            <h3>말버릇</h3>
-            <p id="habitResult">분석 전</p>
-          </div>
-          <div class="card">
-            <h3>발표 속도</h3>
-            <p id="speedResult">분석 전</p>
-          </div>
-          <div class="card">
-            <h3>자세</h3>
-            <p id="postureResult">분석 전</p>
-          </div>
+        <div class="card">
+          <h3>발표 속도</h3>
+          <p id="speedResult">분석 전</p>
         </div>
 
-        <div class="feedback-box">
-          <h2>ChatGPT 발표문 분석</h2>
-          <p id="aiFeedback">발표문을 입력하고 분석 시작을 눌러주세요.</p>
-        </div>
-      </section>
-
-      <section id="growth" class="page">
-        <h1>성장 기록</h1>
-        <p>점수 대신 발표 습관의 변화를 기록합니다.</p>
-
-        <div class="growth-box">
-          <h3>말버릇 변화</h3>
-          <p>12회 → 8회 → 5회 → 3회</p>
+        <div class="card">
+          <h3>자세</h3>
+          <p id="postureResult">분석 전</p>
         </div>
 
-        <div class="growth-box">
-          <h3>시선 처리 변화</h3>
-          <p>부족 → 보통 → 양호</p>
-        </div>
+      </div>
 
-        <div class="growth-box">
-          <h3>발표 속도 변화</h3>
-          <p>빠름 → 보통 → 적절</p>
-        </div>
+      <div class="feedback-box">
 
-        <div class="growth-box">
-          <h3>자세 변화</h3>
-          <p>불안정 → 보통 → 안정적</p>
-        </div>
-      </section>
-    </main>
-  </div>
+        <h2>AI 피드백</h2>
 
-  <script src="script.js"></script>
+        <p id="aiFeedback">
+          발표를 진행하면 AI 피드백이 표시됩니다.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- 성장 기록 -->
+    <section id="growth" class="page">
+
+      <h1>성장 기록</h1>
+
+      <div class="growth-box">
+        <h3>말버릇 변화</h3>
+        <p>12회 → 7회 → 4회</p>
+      </div>
+
+      <div class="growth-box">
+        <h3>시선 처리</h3>
+        <p>부족 → 보통 → 양호</p>
+      </div>
+
+      <div class="growth-box">
+        <h3>발표 속도</h3>
+        <p>빠름 → 적절</p>
+      </div>
+
+      <div class="growth-box">
+        <h3>발표 자신감</h3>
+        <p>긴장 → 보통 → 자신감 있음</p>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+
 </body>
 </html>
