@@ -5,79 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SpeakUp AI</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="nav">
-    <div class="brand"><img src="assets/coach-character.png" alt="SpeakUp AI 캐릭터"><span>SpeakUp AI</span></div>
-    <a href="#practice" class="nav-btn">발표 시작</a>
-  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <h2>SpeakUp AI</h2>
+      <button onclick="showPage('home')">홈</button>
+      <button onclick="showPage('practice')">발표 연습</button>
+      <button onclick="showPage('analysis')">AI 분석</button>
+      <button onclick="showPage('growth')">성장 기록</button>
+    </aside>
 
-  <main>
-    <section class="hero">
-      <div class="hero-text">
-        <p class="tag">AI Presentation Coach</p>
-        <h1>발표 습관과 자세를<br>귀엽게 분석해주는 발표 코치</h1>
-        <p class="desc">말 속도, 말버릇, 시선, 자세를 한 번에 확인하고 발표 자신감을 키워보세요.</p>
-        <div class="hero-actions">
-          <a href="#practice" class="primary">연습 시작하기</a>
-          <a href="#features" class="secondary">기능 보기</a>
+    <main class="content">
+      <section id="home" class="page active">
+        <h1>AI 발표 코치 웹앱</h1>
+        <p>말하기 습관과 발표 자세를 분석해 발표 실력을 키워주는 웹앱입니다.</p>
+        <img src="assets/coach-character.png" class="character" />
+        <button class="main-btn" onclick="showPage('practice')">연습 시작하기</button>
+      </section>
+
+      <section id="practice" class="page">
+        <h1>발표 연습</h1>
+        <textarea id="speechText" placeholder="발표문을 입력하세요."></textarea>
+        <div class="btn-group">
+          <button onclick="startPractice()">분석 시작</button>
+          <button onclick="showPage('analysis')">결과 보기</button>
         </div>
-      </div>
-      <div class="hero-card">
-        <div class="bubble">오늘 발표도 내가 봐줄게...</div>
-        <img src="assets/coach-character.png" alt="SpeakUp AI 캐릭터" class="character">
-      </div>
-    </section>
+      </section>
 
-    <section id="features" class="section">
-      <h2>핵심 기능</h2>
-      <div class="grid">
-        <article>🎙️<h3>발표 녹음</h3><p>발표를 녹음하고 다시 들으며 부족한 점을 확인해요.</p></article>
-        <article>⚡<h3>말 속도 분석</h3><p>너무 빠르거나 느린 말하기를 자동으로 알려줘요.</p></article>
-        <article>💬<h3>말버릇 감지</h3><p>“음”, “어”, “그” 같은 불필요한 표현을 세요.</p></article>
-        <article>📷<h3>자세 분석</h3><p>웹캠으로 시선과 움직임을 확인하는 느낌을 구현했어요.</p></article>
-      </div>
-    </section>
-
-    <section id="practice" class="section app-box">
-      <div class="practice-top">
-        <div>
-          <p class="tag">Practice Room</p>
-          <h2>발표 연습하기</h2>
-        </div>
-        <input id="titleInput" placeholder="발표 제목을 입력하세요" />
-      </div>
-
-      <div class="practice-layout">
-        <div class="panel">
-          <video id="video" autoplay muted playsinline></video>
-          <div class="buttons">
-            <button id="cameraBtn">웹캠 켜기</button>
-            <button id="startBtn">녹음 시작</button>
-            <button id="stopBtn" disabled>종료/분석</button>
+      <section id="analysis" class="page">
+        <h1>AI 분석 결과</h1>
+        <div class="cards">
+          <div class="card">
+            <h3>말버릇</h3>
+            <p id="habitResult">분석 전</p>
           </div>
-          <audio id="audio" controls></audio>
+          <div class="card">
+            <h3>발표 속도</h3>
+            <p id="speedResult">분석 전</p>
+          </div>
+          <div class="card">
+            <h3>자세</h3>
+            <p id="postureResult">분석 전</p>
+          </div>
         </div>
 
-        <div class="panel result">
-          <h3>AI 분석 결과</h3>
-          <div class="score"><span id="score">--</span>점</div>
-          <p id="feedback">발표를 녹음하면 AI 피드백이 표시됩니다.</p>
-          <ul id="details"></ul>
-          <button id="saveBtn">성장 기록 저장</button>
+        <div class="feedback-box">
+          <h2>ChatGPT 발표문 분석</h2>
+          <p id="aiFeedback">발표문을 입력하고 분석 시작을 눌러주세요.</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section records">
-      <h2>성장 기록</h2>
-      <canvas id="recordChart"></canvas>
-      <div id="recordList" class="record-list"></div>
-    </section>
-  </main>
+      <section id="growth" class="page">
+        <h1>성장 기록</h1>
+        <p>점수 대신 발표 습관의 변화를 기록합니다.</p>
 
-  <footer>SpeakUp AI · 학생 발표 연습 웹앱</footer>
+        <div class="growth-box">
+          <h3>말버릇 변화</h3>
+          <p>12회 → 8회 → 5회 → 3회</p>
+        </div>
+
+        <div class="growth-box">
+          <h3>시선 처리 변화</h3>
+          <p>부족 → 보통 → 양호</p>
+        </div>
+
+        <div class="growth-box">
+          <h3>발표 속도 변화</h3>
+          <p>빠름 → 보통 → 적절</p>
+        </div>
+
+        <div class="growth-box">
+          <h3>자세 변화</h3>
+          <p>불안정 → 보통 → 안정적</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
