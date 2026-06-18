@@ -8,121 +8,60 @@
 </head>
 <body>
 
-<div class="app">
+  <div class="app">
+    <aside class="sidebar">
+      <h2>SpeakUp AI</h2>
+      <button onclick="showPage('home')">홈</button>
+      <button onclick="showPage('practice')">발표 연습</button>
+      <button onclick="showPage('analysis')">AI 분석</button>
+      <button onclick="showPage('growth')">성장 기록</button>
+    </aside>
 
-  <aside class="sidebar">
-    <h2>SpeakUp AI</h2>
-    <button onclick="showPage('home')"> 홈</button>
-    <button onclick="showPage('practice')"> 발표 연습</button>
-    <button onclick="showPage('analysis')"> AI 분석</button>
-    <button onclick="showPage('growth')"> 성장 기록</button>
-  </aside>
-
-  <main class="content">
-
-    <section id="home" class="page active">
-      <h1>AI 발표 코치 웹앱</h1>
-      <p>
-        웹캠과 마이크를 활용해 실제 발표처럼 연습하고,<br>
-        말하기 습관과 자세를 확인해 발표 자신감을 키우는 웹앱입니다.
-      </p>
-      <img src="assets/bear-character.jpg" class="character" alt="SpeakUp AI 캐릭터">
-      <button class="main-btn" onclick="showPage('practice')">발표 연습 시작</button>
-    </section>
-
-    <section id="practice" class="page">
-      <h1>🎤 발표 연습</h1>
-      <p>카메라와 마이크를 켜고 실제 발표를 진행해보세요.</p>
-
-      <div class="camera-box">
-        <video id="camera" autoplay playsinline muted></video>
-      </div>
-
-      <div id="status"> 발표 준비 중...</div>
-
-      <div class="practice-buttons">
-        <button onclick="startPractice()">▶ 발표 시작</button>
-        <button onclick="stopPractice()">⏹ 발표 종료</button>
-        <button onclick="showPage('analysis')"> 결과 보기</button>
-      </div>
-
-      <div class="practice-guide">
-        <h3>AI가 분석하는 항목</h3>
-        <ul>
-          <li> 시선 처리</li>
-          <li> 자세 안정성</li>
-          <li> 말버릇 감지</li>
-          <li> 발표 속도</li>
-          <li> 전달력</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="analysis" class="page">
-      <h1> AI 분석 결과</h1>
-
-      <div class="cards">
-        <div class="card">
-          <h3>말버릇</h3>
-          <p id="habitResult">발표 후 분석됩니다.</p>
-        </div>
-
-        <div class="card">
-          <h3>발표 속도</h3>
-          <p id="speedResult">발표 후 분석됩니다.</p>
-        </div>
-
-        <div class="card">
-          <h3>시선 처리</h3>
-          <p id="eyeResult">발표 후 분석됩니다.</p>
-        </div>
-
-        <div class="card">
-          <h3>자세 안정성</h3>
-          <p id="postureResult">발표 후 분석됩니다.</p>
-        </div>
-      </div>
-
-      <div class="feedback-box">
-        <h2>ChatGPT 종합 피드백</h2>
-        <p id="aiFeedback">
-          발표를 진행하면 말하기 습관과 자세를 바탕으로 피드백이 표시됩니다.
-        </p>
-      </div>
- </section>
-
-    <section id="analysis" class="page">
-      <h2>AI 발표 코치 피드백</h2>
+    <main class="content">
       
-      <div style="margin: 20px 0;">
-        <input type="password" id="apiKeyInput" placeholder="발급받은 Gemini API 키를 넣으세요" style="padding: 10px; width: 300px;">
-        <button onclick="saveApiKey()" style="padding: 10px;">키 저장하기</button>
-      </div>
+      <section id="home" class="page active">
+        <h1>AI 발표 코치 웹앱</h1>
+        <p>
+          웹캠과 마이크를 활용해 실제 발표처럼 연습하고,<br>
+          말하기 습관과 자세를 확인해 발표 자신감을 키우는 웹앱입니다.
+        </p>
+        <img src="assets/bear-character.jpg" class="character" alt="SpeakUp AI 캐릭터">
+        <button class="main-btn" onclick="showPage('practice')">발표 연습 시작</button>
+      </section>
 
-      <button onclick="startAIFeedbackTest()" style="padding: 15px 30px; font-size: 16px; cursor: pointer;">
-        AI 종합 피드백 받기
-      </button>
+      <section id="practice" class="page">
+        <h1>발표 연습</h1>
+        <p>여기에 웹캠 및 마이크 실행 기능이 들어갈 예정입니다.</p>
+      </section>
 
-      <div id="responseArea" style="border: 2px dashed #ccc; padding: 20px; margin-top: 20px; background: #fafafa; border-radius: 8px; white-space: pre-wrap;">
-        이곳에 곰돌이 AI 코치의 피드백이 나타납니다!
-      </div>
-    </section>
-
-    <section id="growth" class="page">
-      <h1>성장 기록</h1>
-      <p>발표 종료 버튼을 누르면 발표 기록이 자동으로 저장됩니다.</p>
-
-      <div id="historyList">
-        <div class="growth-box">
-          아직 발표 기록이 없습니다.
+      <section id="analysis" class="page">
+        <h1>AI 발표 코치 피드백</h1>
+        
+        <div style="margin: 20px 0;">
+          <input type="password" id="apiKeyInput" placeholder="발급받은 Gemini API 키를 넣으세요" style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;">
+          <button onclick="saveApiKey()" style="padding: 10px; cursor: pointer;">키 저장하기</button>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <button onclick="startAIFeedbackTest()" class="main-btn" style="margin-top: 10px;">
+          AI 종합 피드백 받기
+        </button>
 
-</div>
+        <div id="responseArea" style="border: 2px dashed #ccc; padding: 20px; margin-top: 20px; background: #fafafa; border-radius: 8px; white-space: pre-wrap; text-align: left; color: #333;">
+          이곳에 곰돌이 AI 코치의 피드백이 나타납니다!
+        </div>
+      </section>
 
-<script src="script.js"></script>
+      <section id="growth" class="page">
+        <h1>성장 기록</h1>
+        <p>발표 종료 버튼을 누르면 발표 기록이 자동으로 저장됩니다.</p>
+        <div id="historyList">
+          <div class="growth-box">아직 발표 기록이 없습니다.</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
