@@ -109,3 +109,19 @@
 <script src="script.js"></script>
 </body>
 </html>
+<section id="analysis" class="page">
+  <h2>AI 발표 코치 피드백</h2>
+  
+  <div style="margin: 20px 0;">
+    <input type="password" id="apiKeyInput" placeholder="발급받은 Gemini API 키를 넣으세요" style="padding: 10px; width: 300px;">
+    <button onclick="saveApiKey()" style="padding: 10px;">키 저장하기</button>
+  </div>
+
+  <button onclick="startAIFeedbackTest()" style="padding: 15px 30px; font-size: 16px; cursor: pointer;">
+    AI 종합 피드백 받기
+  </button>
+
+  <div id="responseArea" style="border: 2px dashed #ccc; padding: 20px; margin-top: 20px; background: #fafafa; border-radius: 8px; white-space: pre-wrap; font-line: 1.6;">
+    이곳에 곰돌이 AI 코치의 피드백이 나타납니다!
+  </div>
+</section>

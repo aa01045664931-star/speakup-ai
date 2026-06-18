@@ -149,5 +149,70 @@ function renderHistory() {
     `;
   });
 }
-
 renderHistory();
+// [기능 1] 사용자가 입력한 API 키를 브라우저에 임시 저장하는 마법
+function saveApiKey() {
+  const key = document.getElementById('apiKeyInput').value;
+  if (key) {
+    localStorage.setItem('GEMINI_API_KEY', key);
+    alert('비밀번호(API 키)가 안전하게 저장되었습니다! 🐻');
+  } else {
+    alert('API 키를 입력창에 적어주세요!');
+  }
+}
+
+// [기능 2] 구글 AI에게 발표 데이터를 보내고 대답을 받아오는 마법
+async function startAIFeedbackTest() {
+  const apiKey = localStorage.getItem('GEMINI_API_KEY');
+  const responseArea = document.getElementById('responseArea');
+
+  // 키를 저장 안 했으면 경고창 띄우기
+  if (!apiKey) {
+    alert("화면 상단에 API 키를 입력하고 [키 저장하기]를 먼저 눌러주세요!");
+    return;
+  }
+
+  // 상자에 로딩 글씨 띄우기
+  responseArea.innerText = "곰돌이 AI 코치가 발표 데이터를 분석 중입니다... 🐾 잠시만 기다려주세요!";
+
+  // 가상의 발표 결과 데이터 (나중에 카메라 연동할 때 진짜 수치로 바뀔 거예요)
+  const swayCount = 8;        // 몸 흔들림 8회
+  const badHabitCount = 7;    // 말버릇 '음...' 7회
+  const gazePercent = 65;     // 정면 응시율 65%
+
+  // 구글 제미나이 AI에게 보낼 편지내용(프롬프트)
+  const myPrompt = `
+    사용자가 발표 연습을 마쳤습니다. 다음 데이터를 바탕으로 친근하고 귀여운 곰돌이 코치 말투로 종합 피드백을 작성해 주세요.
+    - 몸 흔들림: ${swayCount}회
+    - 말버릇 사용: ${badHabitCount}회
+    - 시선 처리: 정면 응시율 ${gazePercent}%
+    잘한 점과 개선할 점을 데이터 수치를 언급하며 친절하게 격려해 주세요.
+  `;
+
+  try {
+    // 구글 AI 서버 주소 (최신 Gemini 2.5 Flash 모델)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    
+    // 인터넷을 통해 구글 서버에 요청 보내기
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: myPrompt }] }]
+      })
+    });
+
+    // 구글의 대답 가공하기
+    const data = await response.json();
+    
+    // 대답에서 글자만 쏙 빼내기
+    const aiAnswer = data.candidates[0].content.parts[0].text;
+    
+    // 우리 웹앱 화면 상자에 AI 글씨 채워넣기
+    responseArea.innerText = aiAnswer;
+
+  } catch (error) {
+    console.error(error);
+    responseArea.innerText = "❌ 에러가 발생했습니다! API 키가 정확한지 다시 확인해 주세요.";
+  }
+}
