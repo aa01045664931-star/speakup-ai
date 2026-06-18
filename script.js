@@ -27,7 +27,7 @@ async function startPractice() {
     startTime = new Date();
 
     document.getElementById("status").textContent =
-      "🎤 발표 진행 중입니다. 카메라와 마이크가 작동하고 있어요.";
+      " 발표 진행 중입니다. 카메라와 마이크가 작동하고 있어요.";
 
   } catch (error) {
     alert("카메라 또는 마이크 권한을 허용해주세요!");
