@@ -30,9 +30,23 @@
       </section>
 
       <section id="practice" class="page">
-        <h1>발표 연습</h1>
-        <p>여기에 웹캠 및 마이크 실행 기능이 들어갈 예정입니다.</p>
-      </section>
+
+  <h1>발표 연습</h1>
+
+  <div class="camera-box">
+    <video id="camera" autoplay playsinline muted></video>
+  </div>
+
+  <div class="practice-buttons">
+    <button onclick="startPractice()">발표 시작</button>
+    <button onclick="stopPractice()">발표 종료</button>
+  </div>
+
+  <div id="status">
+    발표 준비 중...
+  </div>
+
+</section>
 
       <section id="analysis" class="page">
         <h1>AI 발표 코치 피드백</h1>

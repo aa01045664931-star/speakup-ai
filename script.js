@@ -68,3 +68,43 @@ async function startAIFeedbackTest() {
     responseArea.innerText = " 에러가 발생했습니다! API 키가 정확한지 다시 확인해 주세요.";
   }
 }
+let stream = null;
+
+async function startPractice() {
+
+  try {
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    });
+
+    const video = document.getElementById("camera");
+
+    video.srcObject = stream;
+
+    document.getElementById("status").textContent =
+      " 발표 연습 진행 중";
+
+  } catch (error) {
+
+    alert("카메라와 마이크 권한을 허용해주세요.");
+
+  }
+
+}
+
+function stopPractice() {
+
+  if(stream){
+
+    stream.getTracks().forEach(track => {
+      track.stop();
+    });
+
+  }
+
+  document.getElementById("status").textContent =
+    " 발표 종료";
+
+}

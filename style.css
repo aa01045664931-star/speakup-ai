@@ -267,3 +267,37 @@ font-size:40px;
 .page.active {
   display: block !important;
 }
+.camera-box{
+  width:100%;
+  max-width:700px;
+  margin:20px auto;
+}
+
+#camera{
+  width:100%;
+  border-radius:20px;
+  background:black;
+  min-height:400px;
+}
+
+.practice-buttons{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.practice-buttons button{
+  padding:15px 25px;
+  border:none;
+  border-radius:15px;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:bold;
+}
+
+#status{
+  margin-top:20px;
+  text-align:center;
+  font-weight:bold;
+}
